@@ -1,0 +1,96 @@
+ADDTAREAFRAGMENT
+package com.example.gestiondetarea.controller
+
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import com.example.gestiondetarea.R
+
+
+class AddTareaFragment : Fragment() {
+    private var nomTarea: String? = null
+    private var descTarea: String? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            nomTarea = it.getString(NOMBRE_BUNDLE)
+            descTarea = it.getString(DESCRIPCION_BUNDLE)
+        }
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_add_tarea, container, false)
+    }
+
+    companion object {
+         const val NOMBRE_BUNDLE = "nombre_bundle"
+         const val DESCRIPCION_BUNDLE = "descripcion_bundle"
+
+        @JvmStatic
+        fun newInstance(nomTarea: String, descTarea: String) =
+            AddTareaFragment().apply {
+                arguments = Bundle().apply {
+                    putString(NOMBRE_BUNDLE, nomTarea)
+                    putString(DESCRIPCION_BUNDLE, descTarea)
+                }
+            }
+    }
+}
+
+MAINACTIVITY
+package com.example.gestiondetarea.controller
+
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
+import androidx.fragment.app.commit
+import androidx.recyclerview.widget.RecyclerView
+import com.example.gestiondetarea.controller.AddTareaFragment.Companion.DESCRIPCION_BUNDLE
+import com.example.gestiondetarea.controller.AddTareaFragment.Companion.NOMBRE_BUNDLE
+import com.example.gestiondetarea.R
+
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+      //  initRecyclerView()
+
+        val bundle = bundleOf( NOMBRE_BUNDLE to "Tarea Móviles",
+            DESCRIPCION_BUNDLE to "Hacer la tarea de dispositivos móviles ")
+
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            add<AddTareaFragment>(R.id.fragmentContainerAdd)
+        }
+
+
+
+
+        }
+    
+    fun initRecyclerView(){
+        val recyclerView = findViewById<RecyclerView>(R.id.recyclerTareas)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = TareaAdapter()
+    }
+    fun crearTarea(nombre: String, descripcion: String) {
+        val nuevaTarea = TareaModel(id = generateId(), nombre = nombre, descripcion = descripcion, estado = false)
+        TareaList.add(nuevaTarea)
+        TareaAdapter.notifyDataSetChanged()
+    }
+
+    fun generateId(): Int {
+        return TareaList.size + 1
+    }
+
+private fun creasTarea():
+
+    }
