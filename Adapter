@@ -1,0 +1,55 @@
+TareaAdapter
+package com.example.gestiondetarea.adapter
+
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.example.gestiondetarea.R
+import com.example.gestiondetarea.model.TareaModel
+
+class TareaAdapter(private val TareaList:List<TareaModel>) : RecyclerView.Adapter<TareaViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TareaViewHolder {
+        val layoutInflater = LayoutInflater.from(parent.context)
+        return TareaViewHolder(layoutInflater.inflate(R.layout.item_tarea, parent, false))
+    }
+
+
+
+    override fun onBindViewHolder(holder: TareaViewHolder, position: Int) {
+        val item = TareaList[position]
+        holder.render(item)
+    }
+
+    override fun getItemCount(): Int {
+    return TareaList.size
+    }
+
+}
+
+TareaViewHolder
+package com.example.gestiondetarea.adapter
+
+import android.view.View
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.example.gestiondetarea.R
+import com.example.gestiondetarea.model.TareaModel
+
+class TareaViewHolder (view: View): RecyclerView.ViewHolder(view){
+
+    val numTarea = view.findViewById<TextView>(R.id.NoTarea)
+    val nombreTarea = view.findViewById<EditText>(R.id.NombreTarea)
+    val descrTarea = view.findViewById<EditText>(R.id.DescripcionTarea)
+    val estadoTarea = view.findViewById<Button>(R.id.BotonCompletar)
+
+
+    fun render(tareaModelModel: TareaModel){
+        numTarea.text = tareaModelModel.id
+        nombreTarea = tareaModelModel.nombre
+        descrTarea = tareaModelModel.descripcion
+        estadoTarea = tareaModelModel.estado
+
+    }
+}
